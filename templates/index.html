@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Фриланс</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  {% load static %}
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.jpg' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+
+
+  <!-- Main CSS File -->
+  <link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">Фриланс платформа</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Дом</a></li>
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#services">Услуги</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="{% static 'img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
+
+      <div class="container text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2>Добро пожаловать на нашу фриланс-платформу</h2>
+            <p>Мы соединяем талантливых фрилансеров и заказчиков, помогая воплотить идеи в жизнь.</p>
+            <a href="#about" class="btn-get-started">Начать работу</a>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+<!-- About Section -->
+<section id="about" class="about section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>О нас</h2>
+    <p>Мы создаем удобную среду для взаимодействия заказчиков и фрилансеров по всему миру.</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+    <div class="row gy-3">
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <img src="{% static 'img/about.jpg' %}" alt="О платформе" class="img-fluid">
+      </div>
+
+      <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+        <div class="about-content ps-0 ps-lg-3">
+          <h3>Гибкие возможности для работы и сотрудничества</h3>
+          <p class="fst-italic">
+            Наша платформа позволяет находить талантливых специалистов и реализовывать проекты любой сложности.
+          </p>
+          <ul>
+            <li>
+              <i class="bi bi-diagram-3"></i>
+              <div>
+                <h4>Быстрый поиск фрилансеров</h4>
+                <p>Простая система фильтров и рейтингов помогает находить лучших специалистов.</p>
+              </div>
+            </li>
+            <li>
+              <i class="bi bi-fullscreen-exit"></i>
+              <div>
+                <h4>Безопасные платежи</h4>
+                <p>Гарантируем безопасные сделки между клиентами и исполнителями через защищенные транзакции.</p>
+              </div>
+            </li>
+          </ul>
+          <p>
+            Мы стремимся создать надежное пространство для продуктивного сотрудничества. Независимо от того, ищете ли вы фрилансера
+            или хотите предложить свои услуги, у нас есть все необходимое для успешной работы.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section><!-- /About Section -->
+
+
+<!-- Cards Section -->
+<section id="cards" class="cards section light-background">
+  <div class="container">
+    <div class="row no-gutters">
+
+      <div class="col-lg-4 col-md-6 card" data-aos="fade-up" data-aos-delay="100">
+        <span>01</span>
+        <h4>Широкий выбор фрилансеров</h4>
+        <p>Тысячи профессионалов готовы выполнить ваш проект — от веб-разработки до графического дизайна.</p>
+      </div><!-- End Card Item -->
+
+      <div class="col-lg-4 col-md-6 card" data-aos="fade-up" data-aos-delay="200">
+        <span>02</span>
+        <h4>Гибкие условия работы</h4>
+        <p>Договоритесь об условиях напрямую с исполнителями. Почасовая оплата или фиксированная сумма — выбирайте, что вам удобнее.</p>
+      </div><!-- End Card Item -->
+
+      <div class="col-lg-4 col-md-6 card" data-aos="fade-up" data-aos-delay="300">
+        <span>03</span>
+        <h4>Безопасные сделки</h4>
+        <p>Защищенные платежи и система эскроу гарантируют, что деньги отправятся исполнителю только после выполнения работы.</p>
+      </div><!-- End Card Item -->
+
+      <div class="col-lg-4 col-md-6 card" data-aos="fade-up" data-aos-delay="400">
+        <span>04</span>
+        <h4>Удобный поиск и фильтры</h4>
+        <p>Фильтруйте фрилансеров по рейтингу, отзывам, специализации и бюджету, чтобы быстро найти подходящего кандидата.</p>
+      </div><!-- End Card Item -->
+
+      <div class="col-lg-4 col-md-6 card" data-aos="fade-up" data-aos-delay="500">
+        <span>05</span>
+        <h4>Простая система отзывов</h4>
+        <p>Оставляйте отзывы и оценки, чтобы помогать другим пользователям находить лучших специалистов.</p>
+      </div><!-- End Card Item -->
+
+      <div class="col-lg-4 col-md-6 card" data-aos="fade-up" data-aos-delay="600">
+        <span>06</span>
+        <h4>Поддержка 24/7</h4>
+        <p>Наша служба поддержки всегда на связи и готова помочь с любыми вопросами.</p>
+      </div><!-- End Card Item -->
+
+    </div>
+  </div>
+</section><!-- /Cards Section -->
+
+
+ <!-- Tabs Section -->
+<section id="tabs" class="tabs section">
+
+  <div class="container">
+    <div class="row justify-content-between">
+
+      <div class="col-lg-5 d-flex align-items-center">
+
+        <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
+          <li class="nav-item">
+            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tabs-tab-1">
+              <i class="bi bi-binoculars"></i>
+              <div>
+                <h4 class="d-none d-lg-block">Находите лучших специалистов</h4>
+                <p>
+                  Используйте удобный поиск и фильтры, чтобы выбрать подходящего фрилансера по опыту, рейтингу и цене.
+                </p>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-2">
+              <i class="bi bi-box-seam"></i>
+              <div>
+                <h4 class="d-none d-lg-block">Безопасные сделки и гарантии</h4>
+                <p>
+                  Все платежи защищены — средства передаются исполнителю только после успешного выполнения заказа.
+                </p>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-3">
+              <i class="bi bi-brightness-high"></i>
+              <div>
+                <h4 class="d-none d-lg-block">Гибкий формат работы</h4>
+                <p>
+                  Работайте с фрилансерами по фиксированной цене или почасовой ставке. Контролируйте процесс и вносите изменения в реальном времени.
+                </p>
+              </div>
+            </a>
+          </li>
+        </ul><!-- End Tab Nav -->
+
+      </div>
+
+      <div class="col-lg-6">
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="tab-pane fade active show" id="tabs-tab-1">
+            <img src="{% static 'img/tabs-1.jpg' %}" alt="Поиск фрилансеров" class="img-fluid">
+          </div><!-- End Tab Content Item -->
+
+          <div class="tab-pane fade" id="tabs-tab-2">
+            <img src="{% static 'img/tabs-2.jpg' %}" alt="Безопасные сделки" class="img-fluid">
+          </div><!-- End Tab Content Item -->
+
+          <div class="tab-pane fade" id="tabs-tab-3">
+            <img src="{% static 'img/tabs-3.jpg' %}" alt="Гибкий формат работы" class="img-fluid">
+          </div><!-- End Tab Content Item -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section><!-- /Tabs Section -->
+
+
+<!-- Services Section -->
+<section id="services" class="services section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Наши услуги</h2>
+    <p>Мы предоставляем удобные инструменты для работы фрилансеров и заказчиков, обеспечивая безопасные и комфортные условия сотрудничества.</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+
+    <div class="row g-5">
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-item item-cyan position-relative">
+          <i class="bi bi-search icon"></i>
+          <div>
+            <h3>Поиск специалистов</h3>
+            <p>Выбирайте фрилансеров по навыкам, рейтингу и стоимости. Используйте фильтры для точного подбора.</p>
+            <a href="service-details.html" class="read-more stretched-link">Подробнее <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-item item-orange position-relative">
+          <i class="bi bi-shield-lock icon"></i>
+          <div>
+            <h3>Безопасные сделки</h3>
+            <p>Средства замораживаются и передаются исполнителю только после успешного завершения работы.</p>
+            <a href="service-details.html" class="read-more stretched-link">Подробнее <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-item item-teal position-relative">
+          <i class="bi bi-card-checklist icon"></i>
+          <div>
+            <h3>Управление проектами</h3>
+            <p>Создавайте заказы, контролируйте их выполнение и вносите изменения в процессе работы.</p>
+            <a href="service-details.html" class="read-more stretched-link">Подробнее <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="service-item item-red position-relative">
+          <i class="bi bi-cash-coin icon"></i>
+          <div>
+            <h3>Гарантированные выплаты</h3>
+            <p>Исполнители получают оплату вовремя, а заказчики защищены от недобросовестных исполнителей.</p>
+            <a href="service-details.html" class="read-more stretched-link">Подробнее <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="500">
+        <div class="service-item item-indigo position-relative">
+          <i class="bi bi-people icon"></i>
+          <div>
+            <h3>Сообщество и отзывы</h3>
+            <p>Оставляйте отзывы, накапливайте рейтинг и находите надежных специалистов.</p>
+            <a href="service-details.html" class="read-more stretched-link">Подробнее <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="600">
+        <div class="service-item item-pink position-relative">
+          <i class="bi bi-chat-text icon"></i>
+          <div>
+            <h3>Чат и поддержка</h3>
+            <p>Общайтесь с заказчиками и исполнителями прямо на платформе, оперативно решая все вопросы.</p>
+            <a href="service-details.html" class="read-more stretched-link">Подробнее <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+    </div>
+
+  </div>
+
+</section><!-- /Services Section -->
+
+
+
+<!-- Faq Section -->
+<section id="faq" class="faq section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Часто задаваемые вопросы</h2>
+    <p>Ответы на самые популярные вопросы о нашей платформе</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+
+    <div class="row justify-content-center">
+
+      <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="faq-container">
+
+          <div class="faq-item faq-active">
+            <h3>Как создать заказ?</h3>
+            <div class="faq-content">
+              <p>Чтобы создать заказ, зарегистрируйтесь, выберите категорию услуг и заполните детали проекта. После этого фрилансеры смогут отправлять вам предложения.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>Как оплатить работу фрилансера?</h3>
+            <div class="faq-content">
+              <p>Оплата осуществляется через безопасную систему платформы. Средства замораживаются и передаются исполнителю только после подтверждения выполнения работы.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>Как я могу найти подходящего фрилансера?</h3>
+            <div class="faq-content">
+              <p>Используйте поиск, фильтры и рейтинги, чтобы выбрать специалиста. Ознакомьтесь с его портфолио, отзывами и предложенной стоимостью услуг.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>Что делать, если работа выполнена некачественно?</h3>
+            <div class="faq-content">
+              <p>Вы можете запросить доработку у исполнителя. Если решение не найдено, можно обратиться в службу поддержки для рассмотрения спора.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>Какие способы вывода средств доступны фрилансерам?</h3>
+            <div class="faq-content">
+              <p>Вывод средств возможен на банковские карты, электронные кошельки и другие доступные способы. Ознакомьтесь с актуальными методами в разделе "Вывод средств".</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>Как работает система отзывов и рейтинга?</h3>
+            <div class="faq-content">
+              <p>После завершения заказа заказчик и исполнитель могут оставить друг другу отзыв. Высокий рейтинг повышает доверие и шансы на получение новых заказов.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+        </div>
+
+      </div><!-- End Faq Column-->
+
+    </div>
+
+  </div>
+
+</section><!-- /Faq Section -->
+
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Фриланс Платформа</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>ул. Адам 108</p>
+            <p>Нью-Йорк, NY 535022</p>
+            <p class="mt-3"><strong>Телефон:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Полезные ссылки</h4>
+          <ul>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Главная</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> О нас</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Услуги</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Условия использования</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Политика конфиденциальности</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Наши услуги</h4>
+          <ul>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Веб-дизайн</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Веб-разработка</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Управление продуктом</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Маркетинг</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i> Графический дизайн</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Подписка на новости</h4>
+          <p>Подпишитесь на нашу рассылку и получайте последние новости о наших продуктах и услугах!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email" placeholder="Ваш email"><input type="submit" value="Подписаться"></div>
+            <div class="loading">Загрузка...</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Ваш запрос на подписку отправлен. Спасибо!</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Авторские права</span> <strong class="px-1 sitename">Фриланс Платформа</strong> <span>Все права защищены, 2025</span></p>
+      <div class="credits">
+      </div>
+    </div>
+
+  </footer>
+
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+
+
+  <!-- Main JS File -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+
+
+
+</body>
+
+</html>
