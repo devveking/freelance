@@ -79,12 +79,6 @@ DATABASES = {
     'default': dj_database_url.config(default='postgresql://postgres:KczSbIwqfuCGifvLsuIHdZEGOSTVOnTL@interchange.proxy.rlwy.net:37361/railway', conn_max_age=600)
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 # Password validation
