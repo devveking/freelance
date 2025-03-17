@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: render(request, 'index.html'), name='index'),
     path('login/', lambda request: render(request, 'login.html'), name='login'),
+    path('register/', lambda request: render(request, 'register.html'), name='register'),
 ]
