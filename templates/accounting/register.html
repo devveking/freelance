@@ -21,26 +21,34 @@
           <a href="{% url 'login' %}" class="btn">Войти</a>
           <button class="btn active">Регистрация</button>
         </div>
- <form class="auth-form">
-  <label>Регистрация</label>
-   <label></label>
+<form method="post" class="auth-form">
+  {% csrf_token %}
 
+  {% if form.errors %}
+    <div class="form-error-box">
+      <ul class="form-errors">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li>{{ field.label }}: {{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
 
-  <input type="full-name" id="full-name" name="full-name" required placeholder="Введите полное имя">
-
-  <input type="email" id="email" name="email" required placeholder="Введите email">
-
-  <input type="phone-number" id="phone-number" name="phone-number" required placeholder="Введите номер">
-
-  <input type="password" id="password" name="password" required placeholder="Введите пароль">
-
-  <input type="confirm-password" id="password" name="password" required placeholder="Подтвердите пароль">
-
-
-
-
+  <input type="text" name="username" required placeholder="Введите полное имя" value="{{ form.username.value|default_if_none:'' }}">
+  <input type="email" name="email" required placeholder="Введите email" value="{{ form.email.value|default_if_none:'' }}">
+  <input type="text" name="phone_number" required placeholder="Введите номер" value="{{ form.phone_number.value|default_if_none:'' }}">
+  <input type="password" name="password1" required placeholder="Введите пароль">
+  <input type="password" name="password2" required placeholder="Подтвердите пароль">
   <button type="submit" class="submit-btn">Зарегистрироваться</button>
 </form>
+
+
+
 
       </div>
     </div>

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounting',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,8 +78,18 @@ WSGI_APPLICATION = 'freelance.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://postgres:KczSbIwqfuCGifvLsuIHdZEGOSTVOnTL@interchange.proxy.rlwy.net:37361/railway', conn_max_age=600)
+    'default': dj_database_url.config(default='postgresql://postgres:zKvzHbflSkgzghhnYtmgXBfqsAIrdcHy@switchyard.proxy.rlwy.net:19297/railway', conn_max_age=600)
 }
+
+AUTH_USER_MODEL = 'accounting.CustomUser'
+
+
+
+AUTHENTICATION_BACKENDS = [
+    'accounting.backends.EmailBackend',  # наш кастомный
+    'django.contrib.auth.backends.ModelBackend',  # на всякий случай, можно убрать
+]
+
 
 
 
@@ -111,6 +122,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGE_CODE = 'ru'
+
+USE_I18N = True
+USE_L10N = True
+
 
 
 # Static files (CSS, JavaScript, Images)

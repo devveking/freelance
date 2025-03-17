@@ -17,7 +17,7 @@ body {
 .container {
   display: flex;
   width: 80%;
-  height: 550px;
+  height: 650px;
   max-width: 900px;
   background: #fff;
   border-radius: 8px;
@@ -90,6 +90,7 @@ body {
 
 .auth-form {
   display: flex;
+  margin-top: 25px;
   flex-direction: column;
   text-align: left;
 }
@@ -128,4 +129,24 @@ body {
 footer {
   margin-top: 10px;
   color: white;
+}
+
+.form-error-box {
+  background-color: #ffe0e0;
+  border: 1px solid #ff8c8c;
+  color: #b00020;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.form-errors {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.form-errors li {
+  margin-bottom: 6px;
 }
