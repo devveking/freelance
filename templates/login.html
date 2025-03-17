@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelance Platform Login</title>
+    {% load static %}
+  <link href="{% static 'accounting/css/accounting.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.2/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <h1 class="logo">Zhasa</h1>
+      <p class="description">Zhasa — это глобальная фриланс-платформа и социальная сеть, где бизнес и независимые профессионалы могут сотрудничать удаленно.</p>
+      <img src="https://cdn.prod.website-files.com/60437b5068e4a6f06e417a1b/61b0c18181646076c8a986c7_freelance-bold-writer-illustration.png" alt="Illustration" class="illustration">
+    </div>
+    <div class="right-panel">
+      <div class="auth-box">
+        <div class="auth-header">
+          <button class="btn active">Войти</button>
+          <a href="{% url 'register' %}" class="btn">Регистрация</a>
+        </div>
+        <form class="auth-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Введите email">
+
+          <label for="password">Пароль</label>
+          <input type="password" id="password" name="password" required placeholder="Введите пароль">
+
+          <a href="#" class="forgot-password">Забыли пароль?</a>
+
+          <button type="submit" class="submit-btn">Войти</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>&copy; Copyright 2025</p>
+  </footer>
+</body>
+
+</html>

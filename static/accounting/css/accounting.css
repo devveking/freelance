@@ -1,0 +1,131 @@
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  margin: 0;
+  background-color: #1bac91;
+  display: flex;
+  font-family: 'Roboto';
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  width: 80%;
+  height: 550px;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-panel {
+  flex: 1;
+  padding: 40px;
+  background: #fff;
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 57px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Raleway';
+  color: #1bac91;
+}
+
+.description {
+  font-size: 14px;
+  color: #333;
+  font-family: 'Roboto';
+  margin-top: 10px;
+}
+
+.illustration {
+  width: 300px;
+  height: 250px;
+  margin-top: 30px;
+  margin-left: 25px;
+}
+
+.auth-box {
+  width: 80%;
+  text-align: center;
+}
+
+.auth-header {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  text-decoration: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #1bac91;
+}
+
+.btn.active {
+  background: #1bac91;
+  color: white;
+  border-radius: 5px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.auth-form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.auth-form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.forgot-password {
+  font-size: 12px;
+  color: #212529;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+
+.submit-btn {
+  padding: 10px;
+  background: #1bac91;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 10px;
+  color: white;
+}
