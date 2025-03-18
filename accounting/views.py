@@ -23,9 +23,16 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('index')  # Заменить на нужный URL
+            return redirect('home')  # Заменить на нужный URL
         else:
             messages.error(request, 'Неверный email или пароль')
     else:
         form = CustomLoginForm()
     return render(request, 'accounting/login.html', {'form': form})
+
+
+def show_home(request):
+    return render(request, 'home.html')
+
+def show_profile(request):
+    return render(request, 'profile.html')
