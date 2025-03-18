@@ -23,6 +23,8 @@ from accounting.views import register_view  # импортируем view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: render(request, 'index.html'), name='index'),
-    path('accounting/', include('accounting.urls')),  # подключаем accounting.urls
+    path('accounting/', include('accounting.urls')),
+
+    path('main/', lambda request: render(request, 'navbar.html'), name='main'),
 ]
 
