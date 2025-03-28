@@ -17,13 +17,16 @@ def register_view(request):
     return render(request, 'accounting/register.html', {'form': form})
 
 
+
+
 def login_view(request):
     if request.method == 'POST':
         form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')  # Заменить на нужный URL
+            # ПЕРЕДАЙ username при редиректе
+            return redirect('profile:user', username=user.username)
         else:
             messages.error(request, 'Неверный email или пароль')
     else:
@@ -31,8 +34,6 @@ def login_view(request):
     return render(request, 'accounting/login.html', {'form': form})
 
 
+
 def show_home(request):
     return render(request, 'home.html')
-
-def show_profile(request):
-    return render(request, 'profile.html')

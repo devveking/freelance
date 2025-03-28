@@ -16,11 +16,11 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'phone_number', 'password1', 'password2')
+        fields = ('username', 'first_name', 'email', 'phone_number', 'password1', 'password2')
         error_messages = {
             'username': {
                 'required': 'Пожалуйста, введите имя пользователя',
-                'unique': 'Это имя уже занято',
+                'unique': 'Это имя пользователя уже занято',
             },
         }
 

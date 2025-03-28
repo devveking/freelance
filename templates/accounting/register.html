@@ -39,7 +39,8 @@
     </div>
   {% endif %}
 
-  <input type="text" name="username" required placeholder="Введите полное имя" value="{{ form.username.value|default_if_none:'' }}">
+<input type="text" name="username" required placeholder="Введите имя пользователя" value="{{ form.username.value|default_if_none:'' }}">
+<input type="text" name="first_name" required placeholder="Введите полное имя" value="{{ form.first_name.value|default_if_none:'' }}">
   <input type="email" name="email" required placeholder="Введите email" value="{{ form.email.value|default_if_none:'' }}">
   <input type="text" name="phone_number" required placeholder="Введите номер" value="{{ form.phone_number.value|default_if_none:'' }}">
   <input type="password" name="password1" required placeholder="Введите пароль">

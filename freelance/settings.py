@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,18 +23,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3!eqaffu2f3!7igo3-hwxjn^_4ng+-*c8sunh=+^ff)4+-#@m1'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.54', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'accounting',
+    'userprofile',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,11 +79,15 @@ WSGI_APPLICATION = 'freelance.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import dj_database_url
+
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://postgres:zKvzHbflSkgzghhnYtmgXBfqsAIrdcHy@switchyard.proxy.rlwy.net:19297/railway', conn_max_age=600)
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
+
 
 AUTH_USER_MODEL = 'accounting.CustomUser'
 
