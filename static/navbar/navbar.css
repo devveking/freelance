@@ -9,11 +9,29 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.ans {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
 .navbar-mainbg {
     background-color: #1bac91;
     height: 80px;
     padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* фикс вместо 100vw */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
 }
+
+
+
 .navbar-logo {
     padding: 15px;
     color: #fff;
@@ -89,6 +107,9 @@ body {
 #navbarSupportedContent .active>a:not(:only-child):after {
     transform: rotate(90deg);
 }
+
+
+
 
 /* --- Адаптив --- */
 @media(min-width: 992px) {

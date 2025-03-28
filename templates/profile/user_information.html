@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        {% load static %}
+  <!-- Main CSS File -->
+  <link href="{% static 'profile/user-information.css' %}" rel="stylesheet">
+</head>
+<div class="bg-white p-4 rounded shadow-sm">
+  <!-- Описание / Биография -->
+  <h5 class="text-primary fw-bold mb-3" style="color: black !important;">О себе</h5>
+  <p class="text-muted">
+    {% if profile.bio %}
+      {{ profile.bio }}
+    {% else %}
+      {% if request.user == profile.user %}
+        <a href="#" class="text-decoration-none text-muted">Добавьте описание о себе</a>
+      {% else %}
+        Описание отсутствует
+      {% endif %}
+    {% endif %}
+  </p>
+
+<!-- Навыки -->
+<h5 class="text-primary fw-bold mt-4 mb-3" style="color: black !important;">Навыки</h5>
+<div class="d-flex flex-wrap gap-2">
+  {% for skill in skills_list %}
+    <span class="badge rounded-pill text-bg-success">{{ skill }}</span>
+  {% empty %}
+    <p class="text-muted">Не указаны</p>
+  {% endfor %}
+</div>
+
+<!-- Категории услуг -->
+<h5 class="text-primary fw-bold mt-4 mb-3" style="color: black !important;">Категории услуг</h5>
+<ul class="list-unstyled text-muted">
+  {% for category in categories_list %}
+    <li><i class="bi bi-check-circle-fill text-success me-2"></i>{{ category }}</li>
+  {% empty %}
+    <p class="text-muted">Не указаны</p>
+  {% endfor %}
+</ul>
+
+
+  <!-- Ставка -->
+  <h5 class="text-primary fw-bold mt-4 mb-3" style="color: black !important;">Ставка</h5>
+  <p class="text-muted">
+    {% if profile.hourly_rate %}
+      Почасовая ставка: <span class="medium-weight">{{ profile.hourly_rate }} ₸/час</span><br>
+    {% endif %}
+    {% if profile.project_rate %}
+      За проект: <span class="medium-weight">от {{ profile.project_rate }} ₸</span>
+    {% endif %}
+    {% if not profile.hourly_rate and not profile.project_rate %}
+      <p class="text-muted">Не указаны</p>
+    {% endif %}
+  </p>
+
+  <!-- Опыт работы -->
+  <h5 class="section-title mt-3" style="color: black !important;">Опыт работы</h5>
+  <ul class="list-unstyled">
+    {% for experience in profile.experiences.all %}
+      <li class="experience-item mt-3">
+        <div class="d-flex align-items-start">
+          <i class="bi bi-briefcase-fill me-2" style="color: #1bac91;"></i>
+          <div>
+            <div class="company-role">
+              {{ experience.company }} <span class="text-muted">— {{ experience.role }}</span>
+            </div>
+            <div class="period">{{ experience.period }}</div>
+            <div class="description">{{ experience.description }}</div>
+          </div>
+        </div>
+      </li>
+    {% empty %}
+      <p class="text-muted">Нет опыта работы</p>
+    {% endfor %}
+  </ul>
+
+  <!-- Образование -->
+  <h5 class="section-title mt-4" style="color: black !important;">Образование</h5>
+  <ul class="list-unstyled">
+    {% for education in profile.educations.all %}
+      <li class="education-item mt-3">
+        <div class="d-flex align-items-start">
+          <i class="bi bi-mortarboard-fill text-success me-2"></i>
+          <div>
+            <div class="fw-semibold">{{ education.institution }}</div>
+            <div class="text-muted small">Специальность: {{ education.specialization }} ({{ education.period }})</div>
+          </div>
+        </div>
+      </li>
+    {% empty %}
+      <p class="text-muted">Образование не указано</p>
+    {% endfor %}
+  </ul>
+</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,171 @@
+body {
+  background-color: #f8f9fa;
+}
+
+/* Стилизуем вертикальный скролл */
+::-webkit-scrollbar {
+    width: 1px; /* ширина скролла */
+}
+
+/* Трек (фон скроллбара) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+/* Сам ползунок */
+::-webkit-scrollbar-thumb {
+    background: #1bac91; /* цвет ползунка, как navbar */
+    height: 30px;
+}
+
+/* При наведении на ползунок */
+::-webkit-scrollbar-thumb:hover {
+    background: #159b82; /* немного темнее при ховере */
+}
+
+
+/*MY PROFILE*/
+
+.ans {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+.profile-header {
+  background-image: url('https://storyblok-cdn.photoroom.com/f/191576/768x432/ba499c40d2/nice-backgrounds-cover.webp');
+  background-size: cover;
+  background-position: center;
+  height: 250px;
+  position: relative;
+}
+.profile-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  position: absolute;
+  bottom: -50px;left: 30px;
+}
+.btn.btn-purple {
+  background-color: #1bac91 !important;
+  color: white !important;
+  border: none !important;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+.btn.btn-purple:hover {
+  background-color: #1bac85 !important;
+  color: white !important;
+}
+
+
+
+
+.nav-tabs {
+  border-bottom: none; /* Убираем границу у табов */
+}
+
+.nav-tabs .nav-link {
+  border: none !important;       /* Убираем бордеры вообще */
+  background-color: transparent; /* Убираем фон */
+  border-radius: 0 !important;   /* Убираем скругления */
+}
+
+.nav-tabs .nav-link.active {
+  border: none;
+  border-bottom: 2px solid #1bac91 !important; /* Только линия снизу */
+  color: #1bac91 !important;
+}
+
+
+    .custom-link {
+  color: gray !important;  /* Зелёный цвет */
+}
+
+.custom-link:hover {
+  color: #169d83 !important;  /* Цвет при наведении */
+}
+
+/* ------- User information ------- */
+
+
+
+
+
+/* ------- Media Queries for MacBook Air 13” ------- */
+
+/* Стандартное разрешение: 1440x900 */
+@media (max-width: 1440px) {
+  .profile-img {
+    width: 130px;
+    height: 130px;
+    bottom: -40px;
+    left: 20px;
+  }
+
+  .profile-header {
+    height: 220px;
+  }
+
+  .btn-purple {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 0.9rem;
+  }
+}
+
+/* Retina дисплеи MacBook Air: 2560x1600 */
+@media (max-width: 2560px) and (min-resolution: 2dppx) {
+  body {
+    font-size: 15px;
+  }
+
+  .profile-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .btn-purple {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 1rem;
+  }
+}
+
+/* Маленькие экраны (мобильные / планшеты) */
+@media (max-width: 768px) {
+  .profile-img {
+    width: 100px;
+    height: 100px;
+    bottom: -30px;
+    left: 15px;
+  }
+
+  .profile-header {
+    height: 180px;
+  }
+
+  .btn-purple {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 0.8rem;
+  }
+}
