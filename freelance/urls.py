@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from accounting.views import register_view  # импортируем view
 
 urlpatterns = [
@@ -26,5 +29,5 @@ urlpatterns = [
     path('accounting/', include('accounting.urls')),
     path('profile/', include(('userprofile.urls', 'userprofile'), namespace='profile')),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

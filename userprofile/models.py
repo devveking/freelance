@@ -6,6 +6,7 @@ from accounting.models import CustomUser
 
 class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='profile')
+    first_name = models.CharField(max_length=30, null=True, blank=True)  # Добавлено поле для first_name
     role = models.CharField(null=True,max_length=100, blank=True)
     bio = models.TextField(null=True,blank=True)
     gender = models.CharField(null=True,max_length=10, blank=True)
@@ -15,6 +16,9 @@ class UserProfile(models.Model):
     categories = models.CharField(null=True,max_length=255, blank=True)
     hourly_rate = models.PositiveIntegerField(null=True, blank=True)
     project_rate = models.PositiveIntegerField(null=True, blank=True)
+
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    background_image = models.ImageField(upload_to='profile_backgrounds/', null=True, blank=True)
 
     # Дополнительно опыт работы и образование можно вынести в отдельные модели
     def __str__(self):
