@@ -9,29 +9,39 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{% static 'profile/profile.css' %}" rel="stylesheet">
-
+    <style>
+        .profile-header {
+            background-size: cover;
+            background-position: center;
+            height: 250px;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 <div class="ans">
   {% include 'navbar.html' %}
 </div>
 <div  class="container  " style="padding-top: 100px;" >
-  {#<!-- Header -->#}
-<div class="profile-header rounded-top-3">
-    <img src="https://i.redd.it/3l9eq5e6a4o81.jpg" alt="Profile" class="profile-img">
+    {#<!-- Header -->#}
+<div class="profile-header rounded-top-3"
+     style="background-image: url('{% if profile.background_image %}{{ profile.background_image.url }}{% else %}https://storyblok-cdn.photoroom.com/f/191576/768x432/ba499c40d2/nice-backgrounds-cover.webp{% endif %}');">
+    <img src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://i.redd.it/3l9eq5e6a4o81.jpg{% endif %}"
+         alt="Profile" class="profile-img">
 </div>
+
 
 <div class="bg-white p-4 rounded-bottom shadow-sm">
   <div class="d-flex justify-content-between align-items-center mt-3">
     <div>
-      <h4 class="mb-0 mt-3 ml-2">{{ profile.user.first_name }} {{ profile.user.last_name }}</h4>
+      <h4 class="mb-0 mt-3 ml-2">{{ profile.first_name }}</h4>
 
 <small class="text-muted ml-2">
     {% if profile.role %}
         {{ profile.role }}
     {% else %}
         {% if request.user == profile.user %}
-            <a href="" class="text-decoration-none text-muted">
+            <a href="{% url 'userprofile:edit_profile' %}" class="text-decoration-none text-muted">
                 <i class="fas fa-pen ml-1 mt-2"></i> Указать профессию
             </a>
         {% else %}
@@ -45,15 +55,15 @@
     <div class="d-flex gap-2">
 {% if request.user == profile.user %}
     <!-- Это мой профиль -->
-<a href="" class="btn btn-purple">
-    <i class="bi bi-pencil-square me-1"></i> Редактировать
+<a href="{% url 'userprofile:edit_profile' %}" class="btn btn-purple">
+    <i class="bi bi-pencil-square me-1"></i>  Редактировать
 </a>
 
 {% else %}
     <!-- Чужой профиль -->
     <div class="d-flex gap-2">
         <button class="btn btn-purple">
-            <i class="bi bi-chat-dots-fill me-1"></i> Написать
+            <i class="bi bi-chat-dots-fill me-1"></i>  Написать
         </button>
         <button class="btn btn-outline-secondary">Подписаться</button>
     </div>
@@ -70,7 +80,7 @@
       <h6 class="text-primary fw-bold" style="color: black !important;">
     Про
     {% if request.user == profile.user %}
-        <a href="" class="text-decoration-none text-muted">
+        <a href="{% url 'userprofile:edit_profile' %}" class="text-decoration-none text-muted">
             <i class="fas fa-pen fa-xs ml-2 mt-2"></i>
         </a>
     {% endif %}

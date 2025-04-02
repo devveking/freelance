@@ -8,19 +8,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from userprofile.models import UserProfile
+from .forms import ProfileEditForm, WorkExperienceFormSet, EducationFormSet
 
 from django.contrib import messages  # Для flash-сообщений
 
 
-
-# @login_required
-# def show_profile(request, username):
-#     profile = get_object_or_404(UserProfile, user__username=username)
-#     section = request.GET.get('section', 'info')
-#     return render(request, 'profile/profile.html', {
-#         'profile': profile,
-#         'section': section
-#     })
 
 @login_required
 def show_profile(request, username):
@@ -40,3 +32,43 @@ def show_profile(request, username):
         'section': section
     })
 
+
+@login_required
+def edit_profile(request):
+    profile = request.user.profile # Получаем профиль текущего пользователя
+    if request.method == "POST":
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile:user', username=request.user.username)  # Перенаправление на страницу профиля
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, "profile/edit-profile.html", {"form": form})
+
+
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+
+    if request.method == "POST":
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+        work_experience_formset = WorkExperienceFormSet(request.POST, instance=profile)
+        education_formset = EducationFormSet(request.POST, instance=profile)
+
+        if form.is_valid() and work_experience_formset.is_valid() and education_formset.is_valid():
+            form.save()
+            work_experience_formset.save()
+            education_formset.save()
+            return redirect('profile:user', username=request.user.username)  # Заменить на URL профиля
+
+    else:
+        form = ProfileEditForm(instance=profile)
+        work_experience_formset = WorkExperienceFormSet(instance=profile)
+        education_formset = EducationFormSet(instance=profile)
+
+    return render(request, 'profile/edit-profile.html', {
+        'form': form,
+        'work_experience_formset': work_experience_formset,
+        'education_formset': education_formset
+    })
