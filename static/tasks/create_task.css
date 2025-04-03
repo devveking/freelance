@@ -14,26 +14,13 @@ body {
 
 .profile-edit-card {
     background: white;
+    width: 60%;
+    margin: auto;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.work-edit-card {
-    background: white;
-    padding: 30px;
-    margin-top: 30px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.study-edit-card {
-    background: white;
-    padding: 30px;
-    margin-top: 30px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
 
 h2 {
     color: #1bac91;
@@ -48,11 +35,17 @@ h2 {
 }
 
 .section h4 {
-    font-size: 18px;
+    font-size: 23px;
     color: #1bac91;
     padding-bottom: 5px;
     display: flex;
     align-items: center;
+}
+
+.anu {
+    font-size: 23px;
+    color: #1bac91;
+    margin-bottom: 10px;
 }
 
 input, select, textarea {

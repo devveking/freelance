@@ -26,8 +26,11 @@ from accounting.views import register_view  # импортируем view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: render(request, 'index.html'), name='index'),
+
     path('accounting/', include('accounting.urls')),
     path('profile/', include(('userprofile.urls', 'userprofile'), namespace='profile')),
+
+    path('tasks/', include('tasks.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
