@@ -1,4 +1,4 @@
-# accounting/urls.py
+# userprofile/urls.py
 from django.urls import path
 from .views import show_profile, edit_profile
 
