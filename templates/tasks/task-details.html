@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <!-- Подключаем Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+<!-- Подключаем Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    {% load static %}
+  <!-- Main CSS File -->
+  <link href="{% static 'tasks/task_details.css' %}" rel="stylesheet">
+</head>
+<body>
+
+  {% include 'navbar.html' %}
+
+   <div class="" style="padding-top: 80px;">
+    <div class="job-list mt-5">
+            <div class="job-card">
+
+                <div class="profile-info">
+    <img src="{{ profile.profile_image.url }}" alt="Фото профиля" class="profile-photo">
+    <div class="profile-details">
+        <span class="profile-name">{{ profile.first_name }}</span>
+        <span class="profile-time">Создано {{ time_since_created }} назад</span>
+    </div>
+</div>
+
+
+                <h3 class="job-title">{{ job.title }}</h3>
+
+                <div class="job-meta mt-3">
+                    <span class="category"><i class="bi bi-folder"></i> {{ job.category }}</span>
+                    <span class="budget"><i class="bi bi-cash"></i> {{ job.budget }} ₸</span>
+{#                    <span class="deadline"><i class="bi bi-clock"></i> Создано: {{ job.created_at|date:"d.m.Y " }}</span>#}
+                    <span class="deadline"><i class="bi bi-calendar"></i> До: {{ job.deadline }}</span>
+
+                </div>
+
+                <p class="job-description mt-3">
+                    {{ job.description }}
+
+                </p>
+
+                {% if job.tag_list %}
+                    <div class="job-tags mt-2">
+                        {% for tag in job.tag_list %}
+                            <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            <div class="mt-4"><a href="javascript:history.back()" class=" btn-view mt-5">Назад</a></div>
+
+
+            </div>
+    </div>
+   </div>
+
+
+
+
+
+
+
+</body>
+</html>

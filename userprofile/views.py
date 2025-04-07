@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from userprofile.models import UserProfile
+from tasks.models import Job
 from .forms import ProfileEditForm, WorkExperienceFormSet, EducationFormSet
 
 from django.contrib import messages  # Для flash-сообщений
@@ -18,8 +19,13 @@ from django.contrib import messages  # Для flash-сообщений
 def show_profile(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
 
-    # Разделяем навыки и категории перед передачей в шаблон
+    active_jobs = Job.objects.filter(client=profile.user, status__in=['new', 'in_progress'])
 
+    # Разделяем теги перед передачей в шаблон
+    for job in active_jobs:
+        job.tag_list = [tag.strip() for tag in job.tags.split(',') if tag.strip()] if job.tags else []
+
+    # Разделяем навыки и категории перед передачей в шаблон
     skills_list = [skill.strip() for skill in profile.skills.split(',') if skill.strip()] if profile.skills else []
     categories_list = [category.strip() for category in profile.categories.split(',') if category.strip()] if profile.categories else []
 
@@ -29,7 +35,8 @@ def show_profile(request, username):
         'profile': profile,
         'skills_list': skills_list,
         'categories_list': categories_list,
-        'section': section
+        'section': section,
+        'active_jobs': active_jobs,
     })
 
 
