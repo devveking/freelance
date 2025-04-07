@@ -4,7 +4,7 @@ from accounting.models import CustomUser  # Импорт кастомного п
 
 class Job(models.Model):
     STATUS_CHOICES = [
-        ('new', 'Новое'),
+        ('new', 'Активное'),
         ('in_progress', 'В процессе'),
         ('completed', 'Завершено'),
     ]

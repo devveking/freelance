@@ -1,0 +1,107 @@
+.job-card {
+    background: white;
+    padding: 20px;
+    border-radius: 7px;
+    margin-left: 100px;
+    margin-right: 100px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.job-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.job-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.job-meta i {
+    margin-right: 5px;
+    color: #1bac91;
+}
+
+.job-description {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.status {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.status-new {
+    background-color: #1bac91;
+    color: white;
+}
+
+.status-in_progress {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.status-completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-view {
+    background-color: #1bac91;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-view:hover {
+    background-color: #159b82;
+}
+
+.btn-link {
+    font-size: 12px;  /* Уменьшаем размер текста */
+    color: #1bac91;   /* Задаём зелёный цвет */
+    text-decoration: none;  /* Убираем подчеркивание */
+    transition: color 0.3s ease;
+
+}
+
+.btn-link:hover {
+    color: #0f8c66;  /* Цвет при наведении */
+    text-decoration: underline;  /* Добавляем подчеркивание при наведении */
+}
+
+.job-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 14px;
+
+}
+
+
+
+.tag {
+    background-color: #1bac91; /* Зелёный фон */
+    color: white; /* Белый текст */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
