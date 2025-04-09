@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'accounting',
     'userprofile',
     'tasks',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
