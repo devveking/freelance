@@ -15,7 +15,7 @@ class JobForm(forms.ModelForm):
         }
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Заголовок задания'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Опишите задание', 'rows': 5}),
+            'description': forms.Textarea(attrs={'placeholder': 'Опишите задание', 'rows': 7}),
             'budget': forms.NumberInput(attrs={'placeholder': 'Напишите бюджет в ₸'}),
             'category': forms.TextInput(attrs={'placeholder': 'Введите категорий через запятую'}),
             'deadline': forms.DateInput(attrs={'type': 'date'}),
