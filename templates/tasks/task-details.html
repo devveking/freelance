@@ -30,7 +30,7 @@
 
                                 {% if not is_owner %}
   <div class="profile-actions ms-auto mt-4">
-    <a href="#" title="Написать сообщение" class="action-btn">
+    <a href="{% url 'open_chat' user_id=client.id %}" title="Написать сообщение" class="action-btn">
       <i class="bi bi-chat-dots"></i>
     </a>
     <a href="#" title="Сохранить задание" class="action-btn with-text">

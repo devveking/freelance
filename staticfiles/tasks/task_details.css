@@ -1,0 +1,213 @@
+/* Блок с профилем */
+.profile-info {
+    display: flex;
+    align-items: flex-start; /* Выровнять по верхнему краю */
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* Фото профиля */
+.profile-photo {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%; /* Делаем фото круглым */
+    object-fit: cover;
+    border: 1px solid #1bac91; /* Зеленая обводка */
+}
+
+/* Контейнер для имени и времени */
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Имя пользователя */
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Время создания */
+.profile-time {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px; /* Отступ сверху для времени */
+}
+
+
+
+.job-card {
+    background: white;
+    padding: 20px;
+    border-radius: 7px;
+    width: 800px;
+    margin: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.job-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.job-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.job-meta i {
+    margin-right: 5px;
+    color: #1bac91;
+}
+
+.job-description {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.status {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.status-new {
+    background-color: #1bac91;
+    color: white;
+}
+
+.status-in_progress {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.status-completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-view {
+    background-color: #1bac91;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-view:hover {
+    background-color: #159b82;
+}
+
+
+.job-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 14px;
+
+}
+
+
+
+.tag {
+    background-color: #1bac91; /* Зелёный фон */
+    color: white; /* Белый текст */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between; /* чтобы действия ушли вправо */
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
+
+/* Кнопки действий */
+.profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right:30px;
+
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #1bac91 !important;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 15px;
+    border: none; /* Убираем границу */
+    transition: background-color 0.2s;
+
+}
+
+
+
+.action-btn:hover {
+    background-color: #159b82;
+}
+
+/* Кнопка с текстом */
+.action-btn.with-text {
+    width: auto;
+    padding: 5px;
+}
+
+/* Стили для меню */
+.dropdown-menu {
+    min-width: 200px; /* Устанавливаем минимальную ширину меню */
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #bdbdbd;
+}
+
+
+
+.modal-header {
+    background-color: #1bac91;
+    color: white;
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
