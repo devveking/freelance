@@ -1,0 +1,125 @@
+<!-- chat_detail.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Чат</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .chat-wrapper {
+      display: flex;
+      height: 100vh;
+    }
+    .chat-sidebar {
+      width: 25%;
+      background-color: #f5f5f5;
+      border-right: 1px solid #ddd;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .chat-sidebar h2 {
+      margin-top: 0;
+    }
+    .chat-sidebar a {
+      display: block;
+      padding: 10px;
+      margin-bottom: 5px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 5px;
+    }
+    .chat-sidebar a:hover {
+      background-color: #e0e0e0;
+    }
+    .chat-main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .chat-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+    .chat-messages p {
+      margin: 5px 0;
+    }
+    .chat-input {
+      display: flex;
+    }
+    .chat-input input {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .chat-input button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .chat-input button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<div class="chat-wrapper">
+
+  <!-- Sidebar -->
+  <div class="chat-sidebar">
+    <h2>Чаты</h2>
+    {% for c in chats %}
+      <a href="{% url 'chat_detail' c.id %}">
+        {% for u in c.participants.all %}
+          {% if u != request.user %}
+            {{ u.username }}
+          {% endif %}
+        {% endfor %}
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- Main Chat -->
+  <div class="chat-main">
+    <div class="chat-messages" id="chat-box">
+      {% for message in messages %}
+        <p><strong>{{ message.sender.username }}</strong>: {{ message.content }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="message-input" placeholder="Напишите сообщение...">
+      <button onclick="sendMessage()">Отправить</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const chatId = "{{ chat.id }}";
+  const socket = new WebSocket(`ws://${window.location.host}/ws/chat/${chatId}/`);
+
+  socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const box = document.getElementById("chat-box");
+    const p = document.createElement("p");
+    p.innerHTML = `<strong>${data.sender}</strong>: ${data.message}`;
+    box.appendChild(p);
+    box.scrollTop = box.scrollHeight;
+  };
+
+  function sendMessage() {
+    const input = document.getElementById("message-input");
+    const message = input.value.trim();
+    if (message)
