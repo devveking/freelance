@@ -43,12 +43,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
 
+
     async def chat_message(self, event):
         user = await self.get_user(event['sender_id'])
-        await self.send(text_data=json.dumps({
-            'message': event['message'],
+        message_data = {
             'sender': user.username,
-        }))
+        }
+
+        # добавляем поля, если они есть
+        if 'message' in event:
+            message_data['message'] = event['message']
+        if 'image_url' in event:
+            message_data['image_url'] = event['image_url']
+        if 'file_url' in event:
+            message_data['file_url'] = event['file_url']
+
+        await self.send(text_data=json.dumps(message_data))
 
     @database_sync_to_async
     def save_message(self, sender_id, message):

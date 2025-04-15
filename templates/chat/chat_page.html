@@ -11,7 +11,7 @@
 
 {% include 'navbar.html' %}
 
-<div class="container mt-5" style="padding-top: 80px;">
+<div class="" style="padding-top: 100px;">
   <div class="chat-container">
     <div class="chat-list">
       {% for chat in chats %}
@@ -51,40 +51,133 @@
             {% if user != request.user %}
               <div class="user-info">
                 {% if user.profile.profile_image %}
+                    <a href="{% url 'profile:user' user.username %}">
                   <img src="{{ user.profile.profile_image.url }}" alt="Avatar" class="avatar">
+                    </a>
                 {% else %}
+                    <a href="{% url 'profile:user' user.username %}">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Avatar" class="avatar">
+                    </a>
                 {% endif %}
+              <a href="{% url 'profile:user' user.username %}" style="text-decoration: none">
                 <span class="username">{{ user.profile.first_name }}</span>
+              </a>
               </div>
             {% endif %}
           {% endfor %}
         </div>
 
-        <div class="messages" id="chat-box">
-          {% for message in active_chat.messages.all %}
-            {% if message.sender == request.user %}
-<div class="d-flex justify-content-end mb-2">
-  <div class="message-bubble bg-success text-white d-flex align-items-center justify-content-between">
-    <span class="message-content">{{ message.content }}</span>
-    <span class="timestamp">{{ message.timestamp|date:"H:i" }}</span>
+<div class="messages" id="chat-box">
+  {% for message in active_chat.messages.all %}
+    {% if message.sender == request.user %}
+      <div class="d-flex justify-content-end mb-2">
+        {% if message.image %}
+  <div class="image-wrapper position-relative d-inline-block">
+    <img src="{{ message.image.url }}" alt="image" class="img-fluid rounded mb-1" style="max-width: 300px; max-height: 400px;">
+    <span class="timestamp-overlay text-white">{{ message.timestamp|date:"H:i" }}</span>
   </div>
-</div>
-            {% else %}
-<div class="d-flex justify-content-start mb-2">
-  <div class="message-bubble bg-light text-dark d-flex align-items-center justify-content-between">
-    <span class="message-content">{{ message.content }}</span>
-    <span class="timestamp">{{ message.timestamp|date:"H:i" }}</span>
-  </div>
-</div>
-            {% endif %}
-          {% endfor %}
-        </div>
 
-        <div class="message-input">
-          <input type="text" id="message-input" placeholder="Написать сообщение...">
-          <button onclick="sendMessage()">Отправить</button>
+        {% elif message.file %}
+          <div class="file-bubble  text-white d-flex align-items-center justify-content-between" style="background-color: #1bac91">
+    <div class="d-flex align-items-center gap-2">
+      <img src="{% static 'chat/zip.png' %}" alt="ZIP" width="32" height="32">
+      <div class="d-flex flex-column"><a href="{{ message.file.url }}" class="text-white " download>{{ message.file.name|cut:"chat_files/"|slice:":15" }}... (.zip)</a>
+
+        <span class="file-size small">{{ message.file.size|filesizeformat }}</span>
+      </div>
+        <span class="timestamp small" style="margin-top: 23px;">{{ message.timestamp|date:"H:i" }}</span>
+    </div>
+          </div>
+
+        {% elif message.content %}
+          <div class="message-bubble bg-success text-white d-flex align-items-center justify-content-between">
+            <span class="message-content">{{ message.content }}</span>
+            <span class="timestamp small">{{ message.timestamp|date:"H:i" }}</span>
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="d-flex justify-content-start mb-2">
+        {% if message.image %}
+  <div class="image-wrapper position-relative d-inline-block">
+    <img src="{{ message.image.url }}" alt="image" class="img-fluid rounded mb-1" style="max-width: 300px; max-height: 400px;">
+    <span class="timestamp-overlay text-white">{{ message.timestamp|date:"H:i" }}</span>
+  </div>
+
+        {% elif message.file %}
+           <div class="file-bubble text-dark d-flex align-items-center justify-content-between" style="background-color: #E5E5EA">
+    <div class="d-flex align-items-center gap-2">
+      <img src="{% static 'chat/zip.png' %}" alt="ZIP" width="32" height="32">
+      <div class="d-flex flex-column"><a href="{{ message.file.url }}" class="text-black " download>{{ message.file.name|slice:"15" }}... (.zip)</a>
+
+        <span class="file-size2 small">{{ message.file.size|filesizeformat }}</span>
+      </div>
+        <span class="timestamp small" style="margin-top: 23px;">{{ message.timestamp|date:"H:i" }}</span>
+    </div>
+          </div>
+
+        {% elif message.content %}
+          <div class="message-bubble bg-light text-dark d-flex align-items-center justify-content-between">
+
+            <span class="message-content">{{ message.content }}</span>
+            <span class="timestamp small">{{ message.timestamp|date:"H:i" }}</span>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+
+
+<div class="message-input position-relative">
+  <!-- Плюсик -->
+  <button id="attachment-btn" class="icon-button " title="Вложения" style="margin-right: 10px">+</button>
+
+  <!-- Выпадающее меню -->
+  <div class="attachment-menu d-none position-absolute bg-white rounded shadow p-2" id="attachment-menu">
+    <label for="image-upload" class="attachment-item d-flex align-items-center">
+      <i class="bi bi-image-fill me-2"></i> Фото
+    </label>
+    <label for="zip-upload" class="attachment-item d-flex align-items-center mt-2">
+      <i class="bi bi-file-earmark-zip me-2"></i> Файл (.zip)
+    </label>
+  </div>
+
+  <!-- Скрытые поля загрузки -->
+  <input type="file" id="image-upload" accept="image/*" hidden>
+  <input type="file" id="zip-upload" accept=".zip" hidden>
+
+  <!-- Поле ввода и кнопка отправки -->
+  <input type="text" id="message-input" placeholder="Написать сообщение...">
+  <!-- Изменим кнопку -->
+<button id="send-button" class="disabled" onclick="sendMessage()" disabled>Отправить</button>
+
+</div>
+
+ <div id="preview-modal" class="d-none">
+  <div class="file-preview-backdrop" onclick="cancelPreview()"></div>
+  <div id="file-preview" class="file-preview">
+    <div class="card d-flex flex-row align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <img id="preview-thumbnail" src="" style="max-width: 70px; max-height: 70px;" class="me-2">
+        <div>
+          <div id="preview-filename" class="fw-bold"></div>
+          <div id="preview-size" class="text-muted small"></div>
         </div>
+      </div>
+      <div class="d-flex align-items-center">
+        <button onclick="cancelPreview()" class="cancel-button">Отмена</button>
+        <button onclick="confirmUpload()" class="file-button">Отправить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
       {% else %}
         <p>Выберите чат слева или начните новый разговор</p>
       {% endif %}
@@ -94,6 +187,118 @@
 
 {% if active_chat %}
 <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+  scrollChatToBottom(true);
+});
+
+
+function scrollChatToBottom(force = false) {
+  const box = document.getElementById("chat-box");
+  const isNearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 100;
+
+  if (force || isNearBottom) {
+    box.scrollTop = box.scrollHeight;
+  }
+}
+
+
+const input = document.getElementById("message-input");
+const sendButton = document.getElementById("send-button");
+
+input.addEventListener("input", () => {
+  const hasText = input.value.trim().length > 0;
+  sendButton.disabled = !hasText;
+  sendButton.classList.toggle("disabled", !hasText);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.readyState === 'complete') {
+        scrollChatToBottom(true);
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hasText = input.value.trim().length > 0;
+  sendButton.disabled = !hasText;
+  sendButton.classList.toggle("disabled", !hasText);
+});
+
+
+let pendingFile = null;
+let pendingType = null;
+
+function showPreview(file, type) {
+  pendingFile = file;
+  pendingType = type;
+
+  const thumb = document.getElementById("preview-thumbnail");
+  const name = document.getElementById("preview-filename");
+  const size = document.getElementById("preview-size");
+
+  name.textContent = file.name;
+  size.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+
+  if (type === "image") {
+    thumb.src = URL.createObjectURL(file);
+  } else {
+    thumb.src = "https://cdn-icons-png.flaticon.com/512/337/337946.png";
+  }
+
+  document.getElementById("preview-modal").classList.remove("d-none");
+}
+
+function cancelPreview() {
+  pendingFile = null;
+  document.getElementById("preview-modal").classList.add("d-none");
+}
+
+function confirmUpload() {
+  if (pendingFile && pendingType) {
+    uploadFile(pendingFile, pendingType);
+    cancelPreview();
+
+    // Очистим input, чтобы повторный выбор файла снова срабатывал
+    if (pendingType === "image") {
+      document.getElementById("image-upload").value = "";
+    } else if (pendingType === "zip") {
+      document.getElementById("zip-upload").value = "";
+    }
+  }
+}
+
+
+
+  const attachmentBtn = document.getElementById('attachment-btn');
+  const attachmentMenu = document.getElementById('attachment-menu');
+
+  attachmentBtn.addEventListener('click', () => {
+    attachmentMenu.classList.toggle('d-none');
+  });
+
+  // Закрытие меню при клике вне него
+  document.addEventListener('click', (e) => {
+    if (!attachmentBtn.contains(e.target) && !attachmentMenu.contains(e.target)) {
+      attachmentMenu.classList.add('d-none');
+    }
+  });
+
+  // Сброс инпутов при клике, чтобы повторно выбрать тот же файл
+document.getElementById("image-upload").addEventListener("click", function () {
+  this.value = null;
+});
+document.getElementById("zip-upload").addEventListener("click", function () {
+  this.value = null;
+});
+
+document.getElementById("image-upload").addEventListener("change", uploadImage);
+document.getElementById("zip-upload").addEventListener("change", uploadZip);
+
+
+
+
+
   const chatId = "{{ active_chat.id }}";
   const socket = new WebSocket(`ws://${window.location.host}/ws/chat/${chatId}/`);
 
@@ -106,25 +311,129 @@
     const now = new Date();
     const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    const msgHTML = `
-      <div class="d-flex ${alignClass} mb-2">
-        <div class="message-bubble ${bubbleClass}">
-          <div>${data.message}</div>
-          <div class="timestamp">${time}</div>
-        </div>
+let contentHTML = '';
+
+if (data.image_url) {
+  contentHTML = `
+    <div class="image-wrapper position-relative d-inline-block">
+      <img src="${data.image_url}" class="img-fluid rounded mb-1" style="max-width: 300px; max-height: 400px;">
+      <span class="timestamp-overlay">${time}</span>
+    </div>
+  `;
+} else if (data.file_url) {
+  const filename = data.file_url.split('/').pop();
+  const shortname = filename.length > 20 ? filename.slice(0, 20) + '...' : filename;
+  const filesize = "неизвестно";
+
+  const isMine = data.sender === "{{ request.user.username }}";
+  const bubbleColor = isMine ? "#1bac91" : "#E5E5EA";
+  const textColor = isMine ? "text-white" : "text-black";
+  const sizeClass = isMine ? "file-size" : "file-size2";
+
+contentHTML = `
+  <div class="file-bubble d-flex align-items-center justify-content-between" style="background-color: ${bubbleColor}">
+    <div class="d-flex align-items-center gap-2">
+      <img src="/static/chat/zip.png" alt="ZIP" width="32" height="32">
+      <div class="d-flex flex-column">
+        <a href="${data.file_url}" class="${isMine ? 'text-white' : 'text-black'}" download>${shortname}</a>
+        <span class="${sizeClass} small">${filesize}</span>
       </div>
-    `;
+      <span class="timestamp small" style="margin-top: 23px; color:#d8f7ed">${time} </span>
+    </div>
+  </div>
+`;
+}
+else if (data.message) {
+  contentHTML = `
+    <span>${data.message}</span>
+    <span class="timestamp small text-muted " style="color:#d8f7ed">${time}</span>
+  `;
+}else {
+  contentHTML = `<i>Пустое сообщение</i>`;
+}
+
+
+
+
+let msgHTML = '';
+if (data.image_url) {
+  msgHTML = `
+    <div class="d-flex ${alignClass} mb-2">
+      ${contentHTML}
+    </div>
+  `;
+} else if (data.file_url) {
+  msgHTML = `
+    <div class="d-flex ${alignClass} mb-2">
+        ${contentHTML}
+    </div>
+  `;
+} else {
+  msgHTML = `
+    <div class="d-flex ${alignClass} mb-2">
+      <div class="message-bubble ${bubbleClass} d-flex align-items-center justify-content-between">
+        ${contentHTML}
+      </div>
+    </div>
+  `;
+}
+
+
+
     box.innerHTML += msgHTML;
-    box.scrollTop = box.scrollHeight;
+    scrollChatToBottom();
+
   };
 
-  function sendMessage() {
-    const input = document.getElementById("message-input");
-    const message = input.value.trim();
-    if (message === "") return;
-    socket.send(JSON.stringify({ message }));
-    input.value = '';
+function sendMessage() {
+  const input = document.getElementById("message-input");
+  const message = input.value.trim();
+  if (message === "") return;
+
+  socket.send(JSON.stringify({ message }));
+  input.value = '';
+  sendButton.disabled = true;
+  sendButton.classList.add("disabled");
+}
+
+
+  function uploadImage() {
+  const file = document.getElementById("image-upload").files[0];
+  if (!file || file.size > 1048576) {
+    alert("Файл должен быть изображением и меньше 1MB.");
+    return;
   }
+  showPreview(file, "image");
+}
+
+function uploadZip() {
+  const file = document.getElementById("zip-upload").files[0];
+  if (!file || file.size > 10485760 || !file.name.endsWith(".zip")) {
+    alert("ZIP-файл должен быть меньше 10MB.");
+    return;
+  }
+  showPreview(file, "file");
+}
+
+function uploadFile(file, type) {
+  const formData = new FormData();
+  formData.append(type, file);
+  formData.append("chat_id", "{{ active_chat.id }}");
+
+  fetch("/chat/upload/", {
+    method: "POST",
+    headers: { "X-CSRFToken": "{{ csrf_token }}" },
+    body: formData
+  }).then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        // сообщение появится через websocket
+      } else {
+        alert(data.error);
+      }
+    });
+}
+
 </script>
 {% endif %}
 
