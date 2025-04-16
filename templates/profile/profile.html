@@ -18,7 +18,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #f4f4f4">
 <div class="ans">
   {% include 'navbar.html' %}
 </div>
@@ -26,7 +26,7 @@
     {#<!-- Header -->#}
 <div class="profile-header rounded-top-3"
      style="background-image: url('{% if profile.background_image %}{{ profile.background_image.url }}{% else %}https://storyblok-cdn.photoroom.com/f/191576/768x432/ba499c40d2/nice-backgrounds-cover.webp{% endif %}');">
-    <img src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://i.redd.it/3l9eq5e6a4o81.jpg{% endif %}"
+    <img src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png{% endif %}"
          alt="Profile" class="profile-img">
 </div>
 

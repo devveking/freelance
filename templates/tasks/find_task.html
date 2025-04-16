@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'tasks/find_task.css' %}" rel="stylesheet">
+</head>
+<body style="background-color: #f4f4f4">
+{% include 'navbar.html' %}
+
+<div class="container" style="padding-top: 120px; max-width: 1400px; ">
+  <form>
+    <div class="input-group">
+      <span class="input-group-text bg-white search-form-custom-height">
+        <i class="bi bi-search"></i>
+      </span>
+      <input type="text" class="form-control" name="q" placeholder="Поиск..." value="{{ search_query }}">
+
+      <button type="submit" class="btn search-form-custom-height" style="background-color: #1bac91;">
+        <i class="bi bi-arrow-right" style="color:white;"></i>
+      </button>
+    </div>
+  </form>
+
+<!-- Filter + Jobs layout -->
+<div class="container" style="padding-top: 60px; max-width: 1400px; margin-left: 50px">
+  <div class="row">
+
+    <!-- Filter Slidebar -->
+    <div class="col-lg-3">
+    <div class="filter_back">
+      <form>
+        <!-- Дедлайн -->
+        <div class="mb-3 border-bottom pb-4 mt-3">
+          <h5 class="mb-3 ">Дедлайн</h5>
+<select class="form-select form-select-sm" name="deadline" style="height: 35px;">
+    <option value="within last day" {% if deadline_filter == 'within last day' %}selected{% endif %}>До 24ч</option>
+    <option value="within last week" {% if deadline_filter == 'within last week' %}selected{% endif %}>На этой неделе</option>
+    <option value="flexible" {% if deadline_filter == 'flexible' %}selected{% endif %}>Гибкий срок</option>
+    <option value="all" {% if deadline_filter == 'all' %}selected{% endif %}>Показать все</option>
+</select>
+
+        </div>
+
+        <!-- Теги -->
+        <div class="mb-3 border-bottom pb-4">
+          <h5 class="mb-3">Теги</h5>
+          <input type="text" class="form-control form-control-sm" name="tags" placeholder="Django, фигма" value="{{ tag_query }}" style="height: 35px;">
+
+        </div>
+
+<!-- Категории -->
+<div class="mb-3 border-bottom pb-4">
+  <h5 class="mb-3">Категории</h5>
+  <div class="d-grid gap-2" id="category-list">
+    {% for item in category_counts %}
+      <div class="form-check category-item {% if forloop.counter > 5 %}d-none{% endif %}">
+        <input class="form-check-input"
+               type="checkbox"
+               name="category"
+               id="category_{{ forloop.counter }}"
+               value="{{ item.category }}"
+               {% if item.category in selected_categories %}checked{% endif %}>
+        <label class="form-check-label d-flex" for="category_{{ forloop.counter }}">
+          {{ item.category }} <span class="ms-auto">{{ item.count }}</span>
+        </label>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if category_counts|length > 5 %}
+    <div class="mt-2" id="category-toggle">
+      <button type="button" class="btn btn-link btn-sm" id="show-more-btn" style="color: #1bac91; padding-left: 0px;">Показать ещё</button>
+    </div>
+  {% endif %}
+</div>
+
+
+
+        <!-- Бюджет -->
+        <div class="mb-4">
+          <h5 class="mb-3">Cтавка оплаты</h5>
+          <div class="input-group mb-2">
+            <span class="input-group-text" style="background-color: #1bac91; color: white;">от</span>
+            <input type="number" name="min_budget" class="form-control form-control-sm" value="{{ min_budget }}" placeholder="1000">
+          </div>
+          <div class="input-group">
+            <span class="input-group-text" style="background-color: #1bac91; color: white;">до</span>
+            <input type="number" name="max_budget" class="form-control form-control-sm" value="{{ max_budget }}" placeholder="50000">
+          </div>
+        </div>
+
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn" style="background-color: #1bac91; color: white;">Применить</button>
+        </div>
+      </form>
+    </div>
+    </div>
+
+    <!-- Jobs list -->
+    <div class="col-lg-9">
+      <div class="job-list">
+        {% for job in jobs %}
+            <div class="job-card mb-4" style="cursor: pointer;" onclick="window.location.href='{% url 'task_detail' job.id %}'">
+
+                <div class="profile-info">
+                    <a href="{% url 'profile:user' job.client.username %}">
+                        {% if job.profile.profile_image %}
+                        <img src="{{ job.profile.profile_image.url }}" alt="Фото профиля" class="profile-photo">
+                   {% else %}
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Фото профиля" class="profile-photo">
+                   {% endif %}
+                    </a>
+                    <div class="profile-details">
+                        <a href="{% url 'profile:user' job.client.username %}  " style="text-decoration: none;" onclick="event.stopPropagation();" >
+                            <span class="profile-name">{{ job.profile.first_name }}</span>
+                        </a>
+                        <span class="profile-time" onclick="event.stopPropagation();">Создано {{ job.time_since_created }}  назад</span>
+                    </div>
+
+                    {% if not job.is_owner %}
+                        <div class="profile-actions ms-auto mt-4">
+                            <a href="{% url 'open_chat' user_id=job.client.id %}" onclick="event.stopPropagation();" title="Написать сообщение" class="action-btn">
+                                <i class="bi bi-chat-dots"></i>
+                            </a>
+                            <a href="#" title="Сохранить задание" class="action-btn with-text">
+                                <i class="bi"></i> <span>Сохранить</span>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="profile-actions ms-auto mt-2 m-lg-2">
+                            <div class="dropdown">
+                                <button type="button" class="action-btn" onclick="event.stopPropagation();" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'edit_task' job.id %}" onclick="event.stopPropagation();">Редактировать</a></li>
+                                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{ job.id }}">Удалить</button></li>
+                                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal{{ job.id }}">Архивировать</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <h3 class="job-title">{{ job.title }}</h3>
+
+                <div class="job-meta mt-3">
+                    <span class="category"><i class="bi bi-folder"></i> {{ job.category }}</span>
+                    <span class="budget"><i class="bi bi-cash"></i> {{ job.budget }} ₸</span>
+                    <span class="deadline"><i class="bi bi-calendar"></i> До: {{ job.deadline }}</span>
+                </div>
+
+                <p class="job-description mt-3">
+                    {{ job.description|truncatewords:40 }}
+                    {% if job.description.split|length > 40 %}
+                        <a href="{% url 'task_detail' job.id %}" onclick="event.stopPropagation();" class=" btn-link">Показать больше</a>
+                    {% endif %}
+                </p>
+
+                {% if job.tag_list %}
+                    <div class="job-tags mt-2">
+                        {% for tag in job.tag_list %}
+                            <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+
+                <!-- Модалки -->
+                <div class="modal fade" id="deleteModal{{ job.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="padding-top: 100px;">
+                        <form method="post" action="{% url 'delete_task' job.id %}">
+                            {% csrf_token %}
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Удалить задание?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">Вы действительно хотите удалить это задание?</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="archiveModal{{ job.id }}" tabindex="-1" aria-labelledby="archiveModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="padding-top: 100px;">
+                        <form method="post" action="{% url 'archive_task' job.id %}">
+                            {% csrf_token %}
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="archiveModalLabel">Архивировать задание?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">После архивирования задание будет считаться завершённым.</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success">Архивировать</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const items = document.querySelectorAll('.category-item');
+    const btn = document.getElementById('show-more-btn');
+
+    let visibleCount = 5;
+    const step = 3;
+    let isExpanded = false;
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        if (!isExpanded) {
+          const hiddenItems = Array.from(items).filter(item => item.classList.contains('d-none'));
+          for (let i = 0; i < step && i < hiddenItems.length; i++) {
+            hiddenItems[i].classList.remove('d-none');
+            visibleCount++;
+          }
+
+          if (visibleCount >= items.length) {
+            btn.textContent = 'Скрыть';
+            btn.style.color = 'red';
+            isExpanded = true;
+          }
+        } else {
+          for (let i = 5; i < items.length; i++) {
+            items[i].classList.add('d-none');
+          }
+          visibleCount = 5;
+          btn.textContent = 'Показать ещё';
+          btn.style.color = '#1bac91';
+          isExpanded = false;
+        }
+      });
+    }
+  });
+</script>
+
+
+</body>
+</html>

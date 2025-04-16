@@ -20,7 +20,7 @@
 
                 <div class="profile-info">
     <a href="{% url 'profile:user' client.username %}">
-    <img src="{{ profile.profile_image.url }}" alt="Фото профиля" class="profile-photo">
+    <img src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png{% endif %}" alt="Фото профиля" class="profile-photo">
 </a>
     <div class="profile-details">
         <a href="{% url 'profile:user' client.username %}" style="text-decoration: none;">

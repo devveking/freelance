@@ -76,9 +76,9 @@
 }
 
 .btn-link {
-    font-size: 12px;  /* Уменьшаем размер текста */
-    color: #1bac91;   /* Задаём зелёный цвет */
-    text-decoration: none;  /* Убираем подчеркивание */
+    font-size: 12px;
+    color: #1bac91;
+    text-decoration: none;
     transition: color 0.3s ease;
 
 }
