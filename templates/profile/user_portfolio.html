@@ -3,8 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+        {% load static %}
+     <!-- Bootstrap 5.3 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'profile/user-portfolio.css' %}" rel="stylesheet">
 </head>
 <body>
-Портфолио
+<div class="portfolio-section">
+
+
+{% if portfolios %}
+  <div class="d-flex flex-wrap mt-4 justify-content-start custom-portfolio-list " style="background-color: white; margin-right: 20px; margin-left: 20px">
+    {% for item in portfolios %}
+      <div class="portfolio-item-custom">
+        <div class="portfolio-item text-center shadow-sm border-0 overflow-hidden">
+          <div style="border-radius: 0px; overflow: hidden;">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" alt="Превью" class="portfolio-thumb">
+            {% else %}
+                <img src="{% static 'profile/image_placeholder.png' %}" alt="Нет изображения" class="portfolio-thumb">
+            {% endif %}
+          </div>
+          <div class="p-3 bg-white">
+            <h6 class="mb-2">{{ item.title }}</h6>
+            {% if item.pdf %}
+              <a href="{{ item.pdf.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+                <i class="bi bi-file-earmark-pdf"></i> PDF
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-muted">Портфолио пока нет.</p>
+{% endif %}
+
+<!-- Кнопка для открытия модального окна -->
+<div class="d-flex justify-content-center mb-3 mt-4">
+  <button class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#addPortfolioModal">
+    <i class="bi bi-plus-lg me-1"></i> Добавить портфолио
+  </button>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal fade" id="addPortfolioModal" tabindex="-1" aria-labelledby="addPortfolioModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 200px;">
+    <div class="modal-content">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="addPortfolioModalLabel">Добавить портфолио</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="title" class="form-label">Название портфолио</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Например: Лендинг для фитнес-клуба">
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Превью (изображение)</label>
+            <input class="form-control" type="file" id="image" name="image" accept="image/*">
+          </div>
+          <div class="mb-3">
+            <label for="pdf" class="form-label">PDF файл</label>
+            <input class="form-control" type="file" id="pdf" name="pdf" accept="application/pdf">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="submit" class="btn btn-success" style="background-color: #1bac91">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </body>
 </html>

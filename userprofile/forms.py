@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import UserProfile, WorkExperience, Education
+from .models import UserProfile, WorkExperience, Education, Portfolio
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:
@@ -68,3 +68,7 @@ class EducationForm(forms.ModelForm):
 WorkExperienceFormSet = inlineformset_factory(UserProfile, WorkExperience, form=WorkExperienceForm, extra=1, can_delete=True)
 EducationFormSet = inlineformset_factory(UserProfile, Education, form=EducationForm, extra=1, can_delete=True)
 
+class PortfolioForm(forms.ModelForm):
+    class Meta:
+        model = Portfolio
+        fields = ['title', 'description', 'image', 'link', 'pdf']
