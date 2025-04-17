@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from userprofile.models import UserProfile
 from tasks.models import Job
-from .forms import ProfileEditForm, WorkExperienceFormSet, EducationFormSet
+from .forms import ProfileEditForm, WorkExperienceFormSet, EducationFormSet, PortfolioForm
 
 from django.contrib import messages  # Для flash-сообщений
 
@@ -29,6 +29,19 @@ def show_profile(request, username):
     skills_list = [skill.strip() for skill in profile.skills.split(',') if skill.strip()] if profile.skills else []
     categories_list = [category.strip() for category in profile.categories.split(',') if category.strip()] if profile.categories else []
 
+    # Обработка формы
+    if request.method == 'POST' and request.user == profile.user:
+        form = PortfolioForm(request.POST, request.FILES)
+        if form.is_valid():
+            portfolio = form.save(commit=False)
+            portfolio.profile = profile
+            portfolio.save()
+            return redirect('userprofile:user', username=username)
+    else:
+        form = PortfolioForm()
+
+    portfolios = profile.portfolios.all()
+
     section = request.GET.get('section', 'info')
 
     return render(request, 'profile/profile.html', {
@@ -37,6 +50,7 @@ def show_profile(request, username):
         'categories_list': categories_list,
         'section': section,
         'active_jobs': active_jobs,
+        'portfolios': portfolios,
     })
 
 

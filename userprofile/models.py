@@ -43,3 +43,14 @@ class Education(models.Model):
     def __str__(self):
         return f"{self.institution}"
 
+
+class Portfolio(models.Model):
+    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='portfolios')
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='portfolio_images/', null=True, blank=True)
+    pdf = models.FileField(upload_to='portfolio_pdfs/', null=True, blank=True)  # добавили это поле
+    link = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.title
