@@ -14,43 +14,51 @@
   <link href="{% static 'profile/user-tasks.css' %}" rel="stylesheet">
 </head>
 <body>
-{% if active_jobs %}
-    <div class="job-list mt-4">
-        {% for job in active_jobs %}
-            <div class="job-card">
-                <h3 class="job-title">{{ job.title }}</h3>
+<div class="task-filters text-center my-4 ">
+    {% if request.user == profile.user %}
+  <button class="btn  me-2 filter-btn active" data-status="new">Активные</button>
+    <button class="btn  me-2 filter-btn" data-status="in_progress">В процессе</button>
+    <button class="btn  filter-btn" data-status="completed">Завершенные</button>
+  {% endif %}
+</div>
 
-                <div class="job-meta mt-3">
-                    <span class="category"><i class="bi bi-folder"></i> {{ job.category }}</span>
-                    <span class="budget"><i class="bi bi-cash"></i> {{ job.budget }} ₸</span>
-                    <span class="deadline"><i class="bi bi-clock"></i> Создано: {{ job.created_at|date:"d.m.Y " }}</span>
-                    <span class="deadline"><i class="bi bi-calendar"></i> До: {{ job.deadline }}</span>
-
-                </div>
-
-                <p class="job-description mt-3">
-                    {{ job.description|truncatewords:40 }}
-                    {% if job.description.split|length > 40 %}
-                        <a href="{% url 'task_detail' job.id %}" class="btn btn-link">Показать больше</a>
-                    {% endif %}
-                </p>
-
-                {% if job.tag_list %}
-                    <div class="job-tags mt-2">
-                        {% for tag in job.tag_list %}
-                            <span class="tag">{{ tag }}</span>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <p class="no-jobs">Нет активных заданий.</p>
-{% endif %}
+<!-- Секции с заданиями -->
+<div id="job-sections">
+  <div class="job-section" data-status="new">
+    {% include 'profile/tasks_list.html' with jobs=new_jobs empty_message="Нет активных заданий." %}
+  </div>
+  <div class="job-section d-none" data-status="in_progress">
+    {% include 'profile/tasks_list.html' with jobs=in_progress_jobs empty_message="Нет заданий в процессе." %}
+  </div>
+  <div class="job-section d-none" data-status="completed">
+    {% include 'profile/tasks_list.html' with jobs=completed_jobs empty_message="Нет завершённых заданий." %}
+  </div>
+</div>
 
 
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const sections = document.querySelectorAll('.job-section');
 
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const selected = button.getAttribute('data-status');
+
+      // Активная кнопка
+      buttons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      // Показ нужной секции
+      sections.forEach(section => {
+        if (section.getAttribute('data-status') === selected) {
+          section.classList.remove('d-none');
+        } else {
+          section.classList.add('d-none');
+        }
+      });
+    });
+  });
+</script>
 
 
 </body>

@@ -8,6 +8,28 @@
     margin-bottom: 20px;
 }
 
+.task-filters .btn {
+    min-width: 150px;
+    font-weight: 400;
+    font-size: 15px;
+    border-color: #1bac91;
+    background-color: white;
+    color: #1bac91;
+}
+
+.task-filters .btn.active {
+    background-color: #1bac91;
+    color: white;
+    border-color: #1bac91;
+}
+
+.task-filters .btn:hover {
+    background-color: #1bac91;
+    color: white;
+    border-color: #1bac91;
+}
+
+
 .job-title {
     font-size: 20px;
     font-weight: bold;

@@ -3,8 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load custom_filters %}
+
+
+            <!-- Подключаем Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Подключаем Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    {% load static %}
+  <!-- Main CSS File -->
+  <link href="{% static 'profile/user-reviews.css' %}" rel="stylesheet">
 </head>
 <body>
+
+<div id="reviewSection" class="container content-space-2 content-space-lg-3 mt-4">
+  <div class="row">
+    <!-- Левая колонка со статистикой -->
+    <div class="col-md-4 mb-7 mb-md-0">
+      <div class="border-bottom pb-4 mb-4">
+        <!-- Общий рейтинг -->
+        <div class="card mb-3">
+          <div class="card-body anu">
+            <div class="d-flex justify-content-center">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <span class="display-4 text-white">{{ average_rating|floatformat:1 }}</span>
+                </div>
+                <div class="flex-grow-1 ms-3">
+<div class="d-flex gap-1 small">
+  {% for _ in full_stars|times %}
+    <img src="{% static 'profile/full_star.png' %}" width="16" height="16" alt="★">
+  {% endfor %}
+  {% if half_star %}
+    <img src="{% static 'profile/half_star.png' %}" width="16.7" height="16.7" alt="½">
+  {% endif %}
+  {% for _ in empty_stars|times %}
+    <img src="{% static 'profile/empty_star.png' %}" width="16" height="16" alt="☆">
+  {% endfor %}
+</div>
+                  <span class="text-white">{{ total_reviews }} отзывов</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3>Разбивка рейтинга</h3>
+        <div class="d-grid gap-1">
+{% if reviews.count > 0 %}
+  {% for i in "54321" %}
+    {% with count=rating_breakdown|get_item:i|default:0 %}
+      <a class="row align-items-center txtnodec" href="#" style="max-width: 25rem;">
+        <div class="col-3">
+          <span class="text-dark">{{ i }} stars</span>
+        </div>
+        <div class="col-7">
+          <div class="progress">
+            <div class="progress-bar anu" style="width: {{ count|div:reviews.count|mul:100|floatformat:0 }}%;"></div>
+          </div>
+        </div>
+        <div class="col-2 text-end text-1bac91">
+          {{ count }}
+        </div>
+      </a>
+    {% endwith %}
+  {% endfor %}
+{% else %}
+  <p class="text-muted">Пока нет отзывов</p>
+{% endif %}
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Правая колонка с отзывами -->
+    <div class="col-md-8">
+      <div class="ps-md-4">
+<!-- Блок отзывов -->
+{#<div class="border-bottom pb-4 mb-4 d-flex justify-content-between align-items-center">#}
+{#  <h4 class="mb-0">Отзывы</h4>#}
+{#  {% if request.user != profile.user %}#}
+{#    <button type="button" class="btn add-review-button" disabled>#}
+{#      {% if user_review %}Редактировать отзыв{% else %}Написать отзыв{% endif %}#}
+{#    </button>#}
+{#  {% endif %}#}
+{#</div>#}
+
+<!-- Форма отзыва -->
+{% if request.user != profile.user %}
+<div id="addReviewForm" class="mb-5">
+  <form method="post">
+    {% csrf_token %}
+
+      <!-- Комментарий -->
+    <div class="mb-3">
+      <label for="comment" class="form-label">Комментарий</label>
+      <textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Поделитесь впечатлением...">{% if user_review %}{{ user_review.comment }}{% endif %}</textarea>
+    </div>
+<!-- Рейтинг -->
+<!-- Рейтинг -->
+<div class="mb-3">
+  <label class="form-label d-block">Рейтинг</label>
+  <div class="rating-stars">
+    {% for i in "54321" %}
+      <input type="radio" class="btn-check" name="rating" id="rating{{ i }}" value="{{ i }}"
+             {% if user_review and user_review.rating|stringformat:"i" == i %}checked{% endif %}>
+      <label for="rating{{ i }}" class="star-label">&#9733;</label>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+
+
+    <!-- Кнопки -->
+    <div class="d-flex gap-2">
+      <button name="add_review" type="submit" class="btn rev-button">
+        {% if user_review %}Сохранить изменения{% else %}Сохранить отзыв{% endif %}
+      </button>
+      {% if user_review %}
+      <button name="delete_review" type="submit" class="btn delete-button"
+              onclick="return confirm('Удалить отзыв?')">
+        Удалить отзыв
+      </button>
+      {% endif %}
+    </div>
+  </form>
+</div>
+{% endif %}
+
+        <!-- Отзывы -->
+        <ul class="list-comment list-comment-divider mb-5" style="margin-left: -13px">
+                <!-- Отзыв пользователя -->
+        {% if user_review %}
+{#          <h5 class="mb-3">Ваш отзыв</h5>#}
+          <li class="list-comment-item mb-5">
+            <div class="d-flex gap-1 mb-3">
+              {% for _ in user_review.full_stars|times %}
+                <img src="{% static 'profile/full_star.png' %}" width="15" height="15" alt="★">
+              {% endfor %}
+              {% if user_review.half_star %}
+                <img src="{% static 'profile/half_star.png' %}" width="15.7" height="15.7" alt="½">
+              {% endif %}
+              {% for _ in user_review.empty_stars|times %}
+                <img src="{% static 'profile/empty_star.png' %}" width="15" height="15" alt="☆">
+              {% endfor %}
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+              <div class="flex-shrink-0">
+                <img class="avatar avatar-sm avatar-circle" src="{% if user_review.author.profile.profile_image %}{{ user_review.author.profile.profile_image.url }}{% else %}https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png{% endif %}" width="40" height="40" alt="User Avatar">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">{{ user_review.author.profile.first_name }}</h5>
+                  <span class="d-block small text-muted">{{ user_review.created_at|date:"j E Y" }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p>{{ user_review.comment }}</p>
+            </div>
+          </li>
+        {% endif %}
+
+        <!-- Остальные отзывы  -->
+        {% if user_review or reviews %}
+          {% for review in reviews %}
+          <li class="list-comment-item">
+            <div class="d-flex gap-1 mb-3">
+  {% for _ in review.full_stars|times %}
+    <img src="{% static 'profile/full_star.png' %}" width="15" height="15" alt="★">
+  {% endfor %}
+  {% if review.half_star %}
+    <img src="{% static 'profile/half_star.png' %}" width="15.7" height="15.7" alt="½">
+  {% endif %}
+  {% for _ in review.empty_stars|times %}
+    <img src="{% static 'profile/empty_star.png' %}" width="15" height="15" alt="☆">
+  {% endfor %}
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+              <div class="flex-shrink-0">
+                <img class="avatar avatar-sm avatar-circle" src="{% if review.author.profile.profile_image %}{{ review.author.profile.profile_image.url }}{% else %}https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png{% endif %}" width="40" height="40" alt="User Avatar">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">{{ review.author.profile.first_name }}</h5>
+                  <span class="d-block small text-muted">{{ review.created_at|date:"j E Y" }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <p>{{ review.comment }}</p>
+            </div>
+          </li>
+        {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted" style="margin-left: -20px;">Отзывов пока нет.</p>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>

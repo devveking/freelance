@@ -20,6 +20,17 @@
   background-color: #f1f5f9;
 }
 
+.portfolio-item h6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Ограничение до 2 строк */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 2.8em; /* Высота примерно на 2 строки */
+  line-height: 1.4em;
+}
+
+
 .portfolio-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);

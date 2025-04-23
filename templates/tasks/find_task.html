@@ -140,8 +140,8 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{% url 'edit_task' job.id %}" onclick="event.stopPropagation();">Редактировать</a></li>
-                                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{ job.id }}">Удалить</button></li>
-                                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal{{ job.id }}">Архивировать</button></li>
+                                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{ job.id }}" onclick="event.stopPropagation();">Удалить</button></li>
+                                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal{{ job.id }}" onclick="event.stopPropagation();">Архивировать</button></li>
                                 </ul>
                             </div>
                         </div>

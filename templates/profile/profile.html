@@ -62,10 +62,12 @@
 {% else %}
     <!-- Чужой профиль -->
     <div class="d-flex gap-2">
+    <a href="{% url 'open_chat' user_id=profile.user.id %}">
         <button class="btn btn-purple">
             <i class="bi bi-chat-dots-fill me-1"></i>  Написать
         </button>
-        <button class="btn btn-outline-secondary">Подписаться</button>
+    </a>
+    <button class="btn btn-outline-secondary">Подписаться</button>
     </div>
 {% endif %}
 
@@ -136,7 +138,7 @@
           <a class="nav-link custom-link {% if section == 'reviews' %}active{% endif %}" href="?section=reviews">Отзывы</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link custom-link {% if section == 'tasks' %}active{% endif %}" href="?section=tasks">Активные задания</a>
+          <a class="nav-link custom-link {% if section == 'tasks' %}active{% endif %}" href="?section=tasks">{% if request.user == profile.user %}Задания{% else %}Активные задания{% endif %}</a>
         </li>
       </ul>
 
@@ -146,6 +148,8 @@
           {% include 'profile/user_portfolio.html' %}
         {% elif section == 'tasks' %}
           {% include 'profile/user-tasks.html' %}
+        {% elif section == 'reviews' %}
+          {% include 'profile/user-reviews.html' %}
         {% else %}
           {% include 'profile/user_information.html' %}
         {% endif %}
