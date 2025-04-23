@@ -17,31 +17,46 @@
 {% if portfolios %}
   <div class="d-flex flex-wrap mt-4 justify-content-start custom-portfolio-list " style="background-color: white; margin-right: 20px; margin-left: 20px">
     {% for item in portfolios %}
-      <div class="portfolio-item-custom">
-        <div class="portfolio-item text-center shadow-sm border-0 overflow-hidden">
-          <div style="border-radius: 0px; overflow: hidden;">
-            {% if item.image %}
-                <img src="{{ item.image.url }}" alt="Превью" class="portfolio-thumb">
-            {% else %}
-                <img src="{% static 'profile/image_placeholder.png' %}" alt="Нет изображения" class="portfolio-thumb">
-            {% endif %}
-          </div>
-          <div class="p-3 bg-white">
-            <h6 class="mb-2">{{ item.title }}</h6>
-            {% if item.pdf %}
-              <a href="{{ item.pdf.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
-                <i class="bi bi-file-earmark-pdf"></i> PDF
-              </a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
+ <div class="portfolio-item-custom">
+  <div class="portfolio-item text-center shadow-sm border-0 overflow-hidden"
+       {% if request.user == profile.user %}
+     data-bs-toggle="modal"
+     data-bs-target="#portfolioActionModal"
+     data-portfolio-id="{{ item.id }}"
+     data-portfolio-title="{{ item.title }}"
+     {% if item.pdf %}
+  data-portfolio-pdf="{{ item.pdf.url }}"
+{% endif %}
+     {% if item.image %}
+  data-portfolio-image="{{ item.image.url }}"
+{% endif %}
+
+       {% endif %}>
+    <div style="border-radius: 0px; overflow: hidden;">
+      {% if item.image %}
+        <img src="{{ item.image.url }}" alt="Превью" class="portfolio-thumb">
+      {% else %}
+        <img src="{% static 'profile/image_placeholder.png' %}" alt="Нет изображения" class="portfolio-thumb">
+      {% endif %}
+    </div>
+    <div class="p-3 bg-white">
+      <h6 class="mb-2">{{ item.title }}</h6>
+      {% if item.pdf %}
+        <a href="{{ item.pdf.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+          <i class="bi bi-file-earmark-pdf"></i> PDF
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
     {% endfor %}
   </div>
 {% else %}
   <p class="text-muted">Портфолио пока нет.</p>
 {% endif %}
 
+{% if request.user == profile.user %}
 <!-- Кнопка для открытия модального окна -->
 <div class="d-flex justify-content-center mb-3 mt-4">
   <button class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#addPortfolioModal">
@@ -62,31 +77,115 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="title" class="form-label">Название портфолио</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Например: Лендинг для фитнес-клуба">
+            <input type="text" class="form-control" id="title" name="title"
+       placeholder="Например: Лендинг для фитнес-клуба" required
+       oninvalid="this.setCustomValidity('Пожалуйста, введите название портфолио')"
+       oninput="this.setCustomValidity('')">
           </div>
           <div class="mb-3">
             <label for="image" class="form-label">Превью (изображение)</label>
-            <input class="form-control" type="file" id="image" name="image" accept="image/*">
+            <input class="form-control" type="file" id="image" name="image" accept="image/*" required
+       oninvalid="this.setCustomValidity('Пожалуйста, выберите изображение-превью')"
+       oninput="this.setCustomValidity('')">
           </div>
           <div class="mb-3">
             <label for="pdf" class="form-label">PDF файл</label>
-            <input class="form-control" type="file" id="pdf" name="pdf" accept="application/pdf">
+            <input class="form-control" type="file" id="pdf" name="pdf" accept="application/pdf" required
+       oninvalid="this.setCustomValidity('Пожалуйста, выберите PDF-файл')"
+       oninput="this.setCustomValidity('')">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-          <button type="submit" class="btn btn-success" style="background-color: #1bac91">Сохранить</button>
+          <button type="submit" class="btn" name="add_portfolio" style="background-color: #1bac91; color:white;">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
+</div>
+
+{% if request.user == profile.user %}
+<div class="modal fade" id="portfolioActionModal" tabindex="-1" aria-labelledby="portfolioActionModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 200px;">
+    <div class="modal-content">
+      <form id="editPortfolioForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="portfolio_id" id="editPortfolioId">
+        <div class="modal-header">
+          <h5 class="modal-title" id="portfolioActionModalLabel">Редактировать портфолио</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editTitle" class="form-label">Название</label>
+            <input type="text" class="form-control" id="editTitle" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="editImage" class="form-label">Изображение</label>
+            <input class="form-control" type="file" id="editImage" name="image" accept="image/*">
+          </div>
+          <div class="mb-3">
+            <label for="editPdf" class="form-label">PDF</label>
+            <input class="form-control" type="file" id="editPdf" name="pdf" accept="application/pdf">
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-danger" style="margin-left: 50px;" id="deletePortfolioBtn">Удалить</button>
+          <button type="submit" class="btn" style="background-color: #1bac91; color: white;">Сохранить изменения</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
+{% endif %}
 
 
-</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var editModal = document.getElementById('portfolioActionModal');
+  editModal.addEventListener('show.bs.modal', function (event) {
+    var trigger = event.relatedTarget;
+
+    const id = trigger.getAttribute('data-portfolio-id');
+    const title = trigger.getAttribute('data-portfolio-title');
+
+    document.getElementById('editPortfolioId').value = id;
+    document.getElementById('editTitle').value = title;
+
+    // Установим action на форму
+    const form = document.getElementById('editPortfolioForm');
+    form.action = `/profile/edit-portfolio/${id}/`; // 👈 настрой маршрут
+
+    // Настраиваем кнопку удаления
+    document.getElementById('deletePortfolioBtn').onclick = function () {
+      if (confirm('Удалить портфолио?')) {
+        const deleteForm = document.createElement('form');
+        deleteForm.method = 'POST';
+        deleteForm.action = '{% url "userprofile:delete_portfolio" %}';
+        deleteForm.innerHTML = `
+          {% csrf_token %}
+          <input type="hidden" name="portfolio_id" value="${id}">
+        `;
+        document.body.appendChild(deleteForm);
+        deleteForm.submit();
+      }
+    };
+  });
+});
+</script>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
 </body>

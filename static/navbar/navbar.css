@@ -134,4 +134,14 @@ body {
     }
 }
 
+#navbarSupportedContent ul li a {
+    white-space: nowrap;
+}
 
+
+@media (max-width: 992px) {
+    #navbarSupportedContent {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

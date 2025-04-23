@@ -1,0 +1,79 @@
+.anu {
+  background-color: #1bac91 !important;
+}
+
+.txtnodec {
+  text-decoration: none;
+}
+
+.text-1bac91 {
+  color: #1bac91;
+}
+
+.rev-button {
+  border-radius: 7px;
+  background-color: #1bac91 !important;
+}
+
+.add-review-button {
+  background-color: #1bac91;
+  color: white;
+}
+
+.add-review-button:hover {
+  background-color: #1bac85;
+  color: white;
+}
+
+
+.star-label {
+  font-size: 24px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* Подсветка при наведении */
+.star-label:hover,
+.star-label:hover ~ .star-label {
+  color: #ffcc00;
+}
+
+/* Подсветка выбранных (checked) */
+input[type="radio"]:checked + .star-label,
+input[type="radio"]:checked + .star-label ~ .star-label {
+  color: #ffcc00;
+
+}
+
+.rating-stars {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 8px;
+  justify-content: flex-start; /* прижимает звезды влево */
+  width: max-content; /* чтобы блок не растягивался */
+}
+
+
+
+
+
+
+  .rev-button {
+    border-radius: 7px;
+    background-color: #1bac91 !important;
+    color: white;
+  }
+
+  .rev-button:hover {
+    background-color: #159c80 !important;
+  }
+
+  .delete-button {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .delete-button:hover {
+    background-color: #c82333;
+  }
